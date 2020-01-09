@@ -6,10 +6,10 @@ services:
     container_name: postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: javacoredb
+      POSTGRES_DB: postgresdb
       POSTGRES_USER: guest
       POSTGRES_PASSWORD: welcome1
-      PG_DATA: /data/postgres/javacoredb
+      PG_DATA: /data/postgres/postgresdb
     volumes:
       - postgres:/data/postgres
     ports:

@@ -6,9 +6,10 @@ insert into car values('Volks', 'Tiguan R-LINE', 2019, 169.22);
 
 create table Person
 (
+    id serial not null,
     name varchar not null,
     address varchar not null,
     dob date not null,
     ordered integer default 1 not null,
-    primary key (name, address, dob, ordered)
+    primary key (id)
 );

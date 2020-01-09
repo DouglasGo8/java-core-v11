@@ -52,7 +52,7 @@ public class App {
             PGPoolingDataSource source = new PGPoolingDataSource();
 
             source.setServerName("localhost");
-            source.setDatabaseName("javacoredb");
+            source.setDatabaseName("postgresdb");
             source.setInitialConnections(1);
             source.setUser("guest");
             source.setPassword("welcome1");

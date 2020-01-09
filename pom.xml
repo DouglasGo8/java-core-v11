@@ -29,6 +29,26 @@
             
     <dependency>
                   
+      <groupId>org.slf4j</groupId>
+                  
+      <artifactId>slf4j-api</artifactId>
+                  
+      <version>1.7.30</version>
+              
+    </dependency>
+            
+    <dependency>
+                  
+      <groupId>org.slf4j</groupId>
+                  
+      <artifactId>slf4j-log4j12</artifactId>
+                  
+      <version>1.7.30</version>
+              
+    </dependency>
+            
+    <dependency>
+                  
       <groupId>junit</groupId>
                   
       <artifactId>junit</artifactId>
@@ -65,15 +85,19 @@
       
   <modules>
             
+    <module>common-module</module>
+            
     <module>chapter-01</module>
             
     <module>chapter-04</module>
             
     <module>chapter-05</module>
             
-    <module>common-module</module>
-          
     <module>chapter-06-jdbc</module>
+            
+    <module>chapter-06-hirakicp</module>
+          
+    <module>chapter-06-hibernate</module>
       
   </modules>
   
