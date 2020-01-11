@@ -1,157 +1,72 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-        
-  
-  <modelVersion>4.0.0</modelVersion>
-        
-  
-  <groupId>com.packtpub.jdk.core.eleven</groupId>
-        
-  
-  <artifactId>java-core-v11</artifactId>
-        
-  
-  <version>1.0-SNAPSHOT</version>
-        
-  
-  <packaging>pom</packaging>
-        
-  
-  <name>Packtpub :: Java 11 :: Cookbook</name>
-        
-  
-  <dependencies>
-                
-    
-    <dependency>
-                        
-      
-      <groupId>org.projectlombok</groupId>
-                        
-      
-      <artifactId>lombok</artifactId>
-                        
-      
-      <version>1.18.10</version>
-                        
-      
-      <scope>provided</scope>
-                    
-    
-    </dependency>
-                
-    
-    <dependency>
-                        
-      
-      <groupId>org.slf4j</groupId>
-                        
-      
-      <artifactId>slf4j-api</artifactId>
-                        
-      
-      <version>1.7.30</version>
-                    
-    
-    </dependency>
-                
-    
-    <dependency>
-                        
-      
-      <groupId>org.slf4j</groupId>
-                        
-      
-      <artifactId>slf4j-log4j12</artifactId>
-                        
-      
-      <version>1.7.30</version>
-                    
-    
-    </dependency>
-                
-    
-    <dependency>
-                        
-      
-      <groupId>junit</groupId>
-                        
-      
-      <artifactId>junit</artifactId>
-                        
-      
-      <version>4.12</version>
-                    
-    
-    </dependency>
-            
-  
-  </dependencies>
-        
-  
-  <build>
-                
-    
-    <plugins>
-                        
-      
-      <plugin>
-                                
-        
-        <groupId>org.apache.maven.plugins</groupId>
-                                
-        
-        <artifactId>maven-compiler-plugin</artifactId>
-                                
-        
-        <version>3.8.1</version>
-                                
-        
-        <configuration>
-                                        
-          
-          <release>11</release>
-                                    
-        
-        </configuration>
-                            
-      
-      </plugin>
-                    
-    
-    </plugins>
-            
-  
-  </build>
-        
-  
-  <modules>
-                
-    
-    <module>common-module</module>
-                
-    
-    <module>chapter-01</module>
-                
-    
-    <module>chapter-04</module>
-                
-    
-    <module>chapter-05</module>
-                
-    
-    <module>chapter-06-jdbc</module>
-                
-    
-    <module>chapter-06-hirakicp</module>
-              
-    
-    <module>chapter-06-hibernate</module>
-          
-    
-    <module>chapter-07</module>
-      
-  </modules>
-    
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.packtpub.jdk.core.eleven</groupId>
+
+    <artifactId>java-core-v11</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+    <name>Packtpub :: Java 11 :: Cookbook</name>
+
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.10</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <release>11</release>
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+
+    <modules>
+        <module>common-module</module>
+        <module>chapter-01</module>
+        <module>chapter-04</module>
+        <module>chapter-05</module>
+        <module>chapter-06-jdbc</module>
+        <module>chapter-06-hirakicp</module>
+        <module>chapter-06-hibernate</module>
+        <module>chapter-07</module>
+    </modules>
+
 
 </project>
