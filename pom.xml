@@ -10,11 +10,11 @@
     <version>1.0-SNAPSHOT</version>
 
     <packaging>pom</packaging>
+
     <name>Packtpub :: Java 11 :: Cookbook</name>
 
 
     <dependencies>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -39,11 +39,11 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
-
     </dependencies>
 
 
     <build>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -66,7 +66,8 @@
         <module>chapter-06-hirakicp</module>
         <module>chapter-06-hibernate</module>
         <module>chapter-07</module>
+        <module>chapter-08</module>
+        <module>chapter-10</module>
     </modules>
-
 
 </project>

@@ -86,6 +86,7 @@ public class App {
         out.println(prize1.isPresent());
         out.println(prize1);
 
+
         prize2.ifPresent(CommonTasks::checkResultInt);
 
         prize4.ifPresentOrElse((n) -> out.println("Ok..." + n), () -> out.println("NOk"));
