@@ -1,20 +1,20 @@
 package com.packtpub.jdk.core.eleven.chapter01;
 
-import static java.lang.System.out;
-
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.function.BiPredicate;
-
-
 import com.packtpub.jdk.core.eleven.common.module.domain.ISpeedModel;
 import com.packtpub.jdk.core.eleven.common.module.model.CommonTasks;
 import com.packtpub.jdk.core.eleven.common.module.model.Numbers;
 import com.packtpub.jdk.core.eleven.common.module.model.Vehicle;
+import lombok.SneakyThrows;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.rules.Timeout;
+
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.function.BiPredicate;
+
+import static java.lang.System.out;
 
 /**
  * @author dbatista
@@ -45,14 +45,8 @@ public class App {
         var list = Arrays.asList(12, 5, 45, 18, 33, 24, 40);
 
         // 1st ref
-        numbers.findSuchNumbers(list, new BiPredicate<Integer, Integer>() {
-
-            @Override
-            public boolean test(Integer arg0, Integer arg1) {
-                // TODO Auto-generated method stub
-                return numbers.isMoreThanFifty(arg0, arg1);
-            }
-        }).forEach(out::println);
+        // TODO Auto-generated method stub
+        numbers.findSuchNumbers(list, numbers::isMoreThanFifty).forEach(out::println);
 
         // numbers.findSuchNumbers(list, (p1, p2) -> numbers.isMoreThanFifty(p1, p2));
         numbers.findSuchNumbers(list, numbers::isMoreThanFifty);
@@ -91,6 +85,8 @@ public class App {
 
         prize4.ifPresentOrElse((n) -> out.println("Ok..." + n), () -> out.println("NOk"));
 
+        out.println(prize2.orElseThrow(RuntimeException::new));
+
         out.println(prize2.isPresent());
         out.println(prize3.isPresent());
         out.println(prized);
@@ -103,5 +99,75 @@ public class App {
         int result = Objects.compare("a", "c", Comparator.naturalOrder()); // return -2
         out.println(result);
     }
+
+    @Test
+    public void howToCompletableWithTimeOut() throws Exception {
+
+
+        CompletableFuture.runAsync(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(2);
+                System.out.println("Hit");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }).get(3, TimeUnit.SECONDS);
+
+    }
+
+    @Test
+    public void howToLines() {
+        var s = "1\n2\n3\n4";
+        s.lines().forEach(out::println);
+    }
+
+    @Test
+    @SneakyThrows
+    public void howToCombineCompletableFuture() {
+
+        var task1 = CompletableFuture.supplyAsync(this::enrichCCFromOrig)
+                .thenAcceptAsync(this::enrichCCOrigOrElseCategory);
+
+
+        var task2 = CompletableFuture.supplyAsync(this::enrichCCFromDest)
+                .thenAcceptAsync(this::enrichCCDestElseCategory);
+
+        task1.get(1, TimeUnit.SECONDS);
+        task2.get(1, TimeUnit.SECONDS);
+
+    }
+
+
+    private int enrichCCFromOrig() {
+        return new Random().nextInt(100);
+    }
+
+    private int enrichCCFromDest() {
+        return new Random().nextInt(100);
+    }
+
+    private void enrichCCOrigOrElseCategory(int result) {
+        //System.out.println(result);
+        if (result % 2 == 0) {
+            // RestTemplate
+            System.out.println("Ok will enrich with CC Category in Orig");
+        } else {
+            // Enrich Normal
+            System.out.println("Ok will enrich CC in Orig");
+        }
+    }
+
+    private void enrichCCDestElseCategory(int result) {
+        //System.out.println(result);
+        if (result % 2 == 0) {
+            // RestTemplate
+            System.out.println("Ok will enrich with CC Category in Dest");
+        } else {
+            // Enrich Normal
+            System.out.println("Ok will enrich CC in Dest");
+        }
+    }
+
 
 }
