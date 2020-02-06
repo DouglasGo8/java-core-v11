@@ -5,14 +5,14 @@ import com.packtpub.jdk.core.eleven.common.module.model.CommonTasks;
 import com.packtpub.jdk.core.eleven.common.module.model.Numbers;
 import com.packtpub.jdk.core.eleven.common.module.model.Vehicle;
 import lombok.SneakyThrows;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.rules.Timeout;
 
+import java.sql.Time;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.function.BiPredicate;
 
 import static java.lang.System.out;
 
@@ -126,16 +126,13 @@ public class App {
     @SneakyThrows
     public void howToCombineCompletableFuture() {
 
-        var task1 = CompletableFuture.supplyAsync(this::enrichCCFromOrig)
-                .thenAcceptAsync(this::enrichCCOrigOrElseCategory);
+        final String brand = "No need exchange the Exchange ;)";
 
-
-        var task2 = CompletableFuture.supplyAsync(this::enrichCCFromDest)
-                .thenAcceptAsync(this::enrichCCDestElseCategory);
-
-        task1.get(1, TimeUnit.SECONDS);
-        task2.get(1, TimeUnit.SECONDS);
-
+        CompletableFuture.supplyAsync(this::enrichCCFromOrig)
+                .thenAcceptAsync((result) -> this.enrichCCOrigOrElseCategory(result, brand))
+                .thenApplyAsync((Void) -> this.enrichCCFromDest())
+                .thenAcceptAsync((result) -> this.enrichCCDestElseCategory(result, brand))
+                .get(2099, TimeUnit.MILLISECONDS);
     }
 
 
@@ -146,27 +143,29 @@ public class App {
     private int enrichCCFromDest() {
         return new Random().nextInt(100);
     }
-
-    private void enrichCCOrigOrElseCategory(int result) {
-        //System.out.println(result);
+    
+    private void enrichCCOrigOrElseCategory(int result, String brand) {
+        //TimeUnit.SECONDS.sleep(1);
+        System.out.println(result);
         if (result % 2 == 0) {
             // RestTemplate
-            System.out.println("Ok will enrich with CC Category in Orig");
+            System.out.println("Ok will enrich with CC Category in Orig " + brand);
         } else {
             // Enrich Normal
             System.out.println("Ok will enrich CC in Orig");
         }
     }
 
-    private void enrichCCDestElseCategory(int result) {
-        //System.out.println(result);
+    private void enrichCCDestElseCategory(int result, String brand) {
+        System.out.println(result);
         if (result % 2 == 0) {
             // RestTemplate
-            System.out.println("Ok will enrich with CC Category in Dest");
+            System.out.println("Ok will enrich with CC Category in Dest " + brand);
         } else {
             // Enrich Normal
-            System.out.println("Ok will enrich CC in Dest");
+            System.out.println("Ok will enrich CC in Dest ");
         }
+
     }
 
 
