@@ -1,18 +1,17 @@
 package com.packtpub.jdk.core.eleven.chapter01;
 
 import com.packtpub.jdk.core.eleven.common.module.domain.ISpeedModel;
-import com.packtpub.jdk.core.eleven.common.module.model.CommonTasks;
-import com.packtpub.jdk.core.eleven.common.module.model.Numbers;
-import com.packtpub.jdk.core.eleven.common.module.model.Vehicle;
+import com.packtpub.jdk.core.eleven.common.module.domain.TempSubscriber;
+import com.packtpub.jdk.core.eleven.common.module.domain.TempSubscription;
+import com.packtpub.jdk.core.eleven.common.module.model.*;
 import lombok.SneakyThrows;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.sql.Time;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.lang.System.out;
 
@@ -136,6 +135,81 @@ public class App {
     }
 
 
+    @Test
+    public void testRangePrecision() {
+
+        IntStream.rangeClosed(1, 500)
+                .map(i -> ThreadLocalRandom.current().nextInt(0, 21))
+                .forEach(out::println);
+
+    }
+
+    @Test
+    @SneakyThrows
+    public void testFuture() {
+
+        /*var shop = new Shop("");
+        var future = Executors.newCachedThreadPool().submit(() -> {
+            //Thread.sleep(4000);
+            return shop.getPrice("");
+        });
+
+        out.println(future.get(3, TimeUnit.SECONDS));
+        System.out.println(shop.getAsyncPrice("").get());
+        */
+        var listOfShots = List.of(
+                new Shop("product01"),
+                new Shop("product02"),
+                new Shop("product03"));
+
+        long start = System.nanoTime();
+        listOfShots
+                //.stream() // 3020 msecs
+                .parallelStream() // 1018 msecs
+                //.map(s -> String.format("%s price is %.2f", s.getProductName(), s.getPrice())) // 1018 msecs
+                .map(s -> CompletableFuture.supplyAsync(() -> String.format("%s is %.2f",
+                        s.getProductName(), s.getPrice())))
+                .map(CompletableFuture::join)
+                .collect(Collectors.toList());
+
+        long duration = (System.nanoTime() - start) / 1_000_000;
+
+        out.println(duration + " in msecs");
+
+
+    }
+
+    @Test
+    public void testOrTimeout() throws ExecutionException, InterruptedException {
+        var other = CompletableFuture.supplyAsync(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+               throw new RuntimeException(e);
+            }
+            return 2;
+
+        });
+
+        var v = CompletableFuture.supplyAsync(() -> {
+            var v1 = new Random().nextInt(100);
+            System.out.println(v1);
+            return v1;
+        }).thenCombine(other, Integer::sum).orTimeout(1, TimeUnit.SECONDS);
+
+        out.println(v.get());
+    }
+
+
+    @Test
+    public void getReactiveTemp() {
+        Flow.Publisher<TempInfo> p = r -> r.onSubscribe(new TempSubscription(r, "New York"));
+
+        p.subscribe(new TempSubscriber());
+    }
+
+
+
     private int enrichCCFromOrig() {
         return new Random().nextInt(100);
     }
@@ -143,7 +217,7 @@ public class App {
     private int enrichCCFromDest() {
         return new Random().nextInt(100);
     }
-    
+
     private void enrichCCOrigOrElseCategory(int result, String brand) {
         //TimeUnit.SECONDS.sleep(1);
         System.out.println(result);
@@ -165,6 +239,7 @@ public class App {
             // Enrich Normal
             System.out.println("Ok will enrich CC in Dest ");
         }
+
 
     }
 
